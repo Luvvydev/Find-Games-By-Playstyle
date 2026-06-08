@@ -2,7 +2,7 @@
 
 Find Games By Playstyle is a small game recommendation app.
 
-It helps you find games based on how you like to play, not just genre.
+It helps you find games based on how you like to play
 
 ## What it does
 
@@ -20,7 +20,6 @@ Meso means reads, adaptation, hidden information, and opponent behavior.
 
 Macro means planning, routing, economy, systems, and long term decisions.
 
-The scores are useful estimates, not facts.
 
 ## Run locally
 
