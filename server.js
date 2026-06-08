@@ -11,9 +11,41 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = Number(process.env.PORT || 3002);
 const PUBLIC_URL = (process.env.PUBLIC_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
+const FRONTEND_URL = (process.env.FRONTEND_URL || PUBLIC_URL).replace(/\/$/, '');
+const PUBLIC_ORIGIN = new URL(PUBLIC_URL).origin;
+const FRONTEND_ORIGIN = new URL(FRONTEND_URL).origin;
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || process.env.ALLOWED_ORIGIN || FRONTEND_ORIGIN)
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean)
+  .map((origin) => {
+    try {
+      return new URL(origin).origin;
+    } catch {
+      return origin.replace(/\/$/, '');
+    }
+  });
 const STEAM_OPENID_ENDPOINT = 'https://steamcommunity.com/openid/login';
+const CROSS_SITE_FRONTEND = PUBLIC_ORIGIN !== FRONTEND_ORIGIN;
 
 app.set('trust proxy', 1);
+app.use((req, res, next) => {
+  const origin = req.headers.origin?.replace(/\/$/, '');
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.setHeader('Vary', 'Origin');
+  }
+
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(204);
+    return;
+  }
+
+  next();
+});
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(session({
@@ -23,8 +55,8 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: PUBLIC_URL.startsWith('https://'),
+    sameSite: CROSS_SITE_FRONTEND ? 'none' : 'lax',
+    secure: PUBLIC_URL.startsWith('https://') || CROSS_SITE_FRONTEND,
     maxAge: 1000 * 60 * 60 * 24 * 14,
   },
 }));
@@ -47,7 +79,7 @@ function requireSteam(req, res, next) {
 }
 
 app.get('/api/steam/config', (_req, res) => {
-  res.json({ ready: Boolean(process.env.STEAM_API_KEY), publicUrl: PUBLIC_URL });
+  res.json({ ready: Boolean(process.env.STEAM_API_KEY), publicUrl: PUBLIC_URL, frontendUrl: FRONTEND_URL });
 });
 
 app.get('/api/me/steam', (req, res) => {
@@ -91,10 +123,10 @@ app.get('/auth/steam/return', async (req, res) => {
     if (!steamid) throw new Error('SteamID missing from claimed ID.');
 
     req.session.steamid = steamid;
-    res.redirect('/?steam=connected');
+    res.redirect(`${FRONTEND_URL}/?steam=connected`);
   } catch (error) {
     console.error('[steam auth]', error);
-    res.redirect('/?steam=error');
+    res.redirect(`${FRONTEND_URL}/?steam=error`);
   }
 });
 

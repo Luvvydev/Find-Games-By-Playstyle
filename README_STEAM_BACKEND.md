@@ -28,6 +28,8 @@ Edit `.env`:
 STEAM_API_KEY=your_real_key_here
 SESSION_SECRET=make_this_a_long_random_string
 PUBLIC_URL=http://localhost:3002
+FRONTEND_URL=http://localhost:3002
+ALLOWED_ORIGINS=http://localhost:3002
 PORT=3002
 ```
 
@@ -49,4 +51,6 @@ Now Connect Steam redirects through the backend, verifies Steam OpenID, loads ow
 ## Notes
 
 If Steam returns zero games, the user's Steam profile game details may be private.
-For deployment, set `PUBLIC_URL` to the deployed HTTPS domain and add that domain to the Steam API key page.
+GitHub Pages can only host the static frontend. It cannot run the Steam login/API backend.
+
+For deployment, host `server.js` on a Node host such as Render, Railway, Fly.io, or your own VPS. Set `PUBLIC_URL` to that backend HTTPS domain. Set `FRONTEND_URL` and `ALLOWED_ORIGINS` to your GitHub Pages URL, for example `https://luvvydev.github.io/Find-Games-By-Playstyle`. Then set `window.SKILLMAP_STEAM_BACKEND_URL` in `index.html` to the backend HTTPS domain. Add the backend domain to the Steam API key page.

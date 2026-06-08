@@ -10,6 +10,17 @@ const colors = {
   balanced: "#d6ff67",
 };
 
+const steamBackendBase = String(window.SKILLMAP_STEAM_BACKEND_URL || "").trim().replace(/\/$/, "");
+const steamRunsOnStaticPages = !steamBackendBase && window.location.hostname.endsWith("github.io");
+
+function steamEndpoint(path) {
+  return steamBackendBase ? `${steamBackendBase}${path}` : path;
+}
+
+function steamBackendAvailable() {
+  return !steamRunsOnStaticPages;
+}
+
 const steamIds = {
   "Geometry Dash": "322170",
   "Aim Lab": "714010",
@@ -405,7 +416,6 @@ const state = {
   search: "",
   quick: "all",
   zoom: 100,
-  pan: null,
   library: readJsonLocal(storageKeys.library, {}),
   hideOwned: localStorage.getItem(storageKeys.hideOwned) !== "false",
   steamSkipped: localStorage.getItem(storageKeys.steamSkipped) === "true",
@@ -1127,7 +1137,7 @@ async function loadSteamLibrary() {
   setSteamMessage("Loading your Steam library...", "info");
 
   try {
-    const response = await fetch("/api/steam/library", { credentials: "include" });
+    const response = await fetch(steamEndpoint("/api/steam/library"), { credentials: "include" });
     const payload = await response.json().catch(() => ({}));
 
     if (!response.ok) {
@@ -1155,7 +1165,12 @@ async function loadSteamLibrary() {
 
 async function refreshSteamSession(options = {}) {
   try {
-    const response = await fetch("/api/me/steam", { credentials: "include" });
+    if (!steamBackendAvailable()) {
+      renderLibraryPanel();
+      return;
+    }
+
+    const response = await fetch(steamEndpoint("/api/me/steam"), { credentials: "include" });
     if (!response.ok) return;
     const payload = await response.json();
     state.steamConnected = Boolean(payload.connected);
@@ -1173,8 +1188,13 @@ async function refreshSteamSession(options = {}) {
 }
 
 function connectSteam() {
+  if (!steamBackendAvailable()) {
+    setSteamMessage("Steam login needs the Node backend. GitHub Pages only hosts the static site, so deploy server.js separately and set SKILLMAP_STEAM_BACKEND_URL in index.html.", "error");
+    return;
+  }
+
   setSteamMessage("Opening Steam login...", "info");
-  window.location.assign("/auth/steam");
+  window.location.assign(steamEndpoint("/auth/steam"));
 }
 
 function skipSteam() {
@@ -1188,7 +1208,9 @@ function skipSteam() {
 
 async function disconnectSteam() {
   try {
-    await fetch("/auth/steam/logout", { method: "POST", credentials: "include" });
+    if (steamBackendAvailable()) {
+      await fetch(steamEndpoint("/auth/steam/logout"), { method: "POST", credentials: "include" });
+    }
   } catch {
     // Local cleanup still matters if logout fails.
   }
@@ -1261,78 +1283,12 @@ function renderGameList() {
   `).join("");
 }
 
-function setZoom(next, focalEvent = null) {
-  const stage = qs(".zoom-stage");
+function setZoom(next) {
+  state.zoom = clamp(next, 80, 260);
   const image = qs("#zoomImage");
   const reset = qs("#zoomReset");
-  const previousZoom = state.zoom;
-  const nextZoom = clamp(next, 80, 260);
-
-  if (!image) {
-    state.zoom = nextZoom;
-    if (reset) reset.textContent = `${state.zoom}%`;
-    return;
-  }
-
-  let focalX = null;
-  let focalY = null;
-  let stageX = null;
-  let stageY = null;
-
-  if (stage && focalEvent) {
-    const rect = stage.getBoundingClientRect();
-    stageX = focalEvent.clientX - rect.left;
-    stageY = focalEvent.clientY - rect.top;
-    focalX = stage.scrollLeft + stageX;
-    focalY = stage.scrollTop + stageY;
-  }
-
-  state.zoom = nextZoom;
-  image.style.width = `${state.zoom}%`;
+  if (image) image.style.width = `${state.zoom}%`;
   if (reset) reset.textContent = `${state.zoom}%`;
-
-  if (stage && focalX !== null && focalY !== null && previousZoom > 0) {
-    const ratio = state.zoom / previousZoom;
-    stage.scrollLeft = Math.max(0, focalX * ratio - stageX);
-    stage.scrollTop = Math.max(0, focalY * ratio - stageY);
-  }
-}
-
-function startZoomPan(event) {
-  if (event.button !== 0) return;
-  const stage = event.currentTarget;
-  state.pan = {
-    pointerId: event.pointerId,
-    x: event.clientX,
-    y: event.clientY,
-    left: stage.scrollLeft,
-    top: stage.scrollTop,
-  };
-  stage.classList.add("dragging");
-  stage.setPointerCapture?.(event.pointerId);
-  event.preventDefault();
-}
-
-function moveZoomPan(event) {
-  if (!state.pan) return;
-  const stage = event.currentTarget;
-  stage.scrollLeft = state.pan.left - (event.clientX - state.pan.x);
-  stage.scrollTop = state.pan.top - (event.clientY - state.pan.y);
-}
-
-function endZoomPan(event) {
-  const stage = event.currentTarget;
-  if (state.pan?.pointerId === event.pointerId) {
-    stage.releasePointerCapture?.(event.pointerId);
-    state.pan = null;
-  }
-  stage.classList.remove("dragging");
-}
-
-function handleZoomWheel(event) {
-  event.preventDefault();
-  const step = event.deltaY > 0 ? -15 : 15;
-  setZoom(state.zoom + step, event);
 }
 
 function openPanel(id) {
@@ -1376,13 +1332,6 @@ function wireEvents() {
   qs("#zoomIn")?.addEventListener("click", () => setZoom(state.zoom + 25));
   qs("#zoomOut")?.addEventListener("click", () => setZoom(state.zoom - 25));
   qs("#zoomReset")?.addEventListener("click", () => setZoom(100));
-
-  const zoomStage = qs(".zoom-stage");
-  zoomStage?.addEventListener("wheel", handleZoomWheel, { passive: false });
-  zoomStage?.addEventListener("pointerdown", startZoomPan);
-  zoomStage?.addEventListener("pointermove", moveZoomPan);
-  zoomStage?.addEventListener("pointerup", endZoomPan);
-  zoomStage?.addEventListener("pointercancel", endZoomPan);
 
   qs("#searchInput")?.addEventListener("input", (event) => {
     state.search = event.target.value;
