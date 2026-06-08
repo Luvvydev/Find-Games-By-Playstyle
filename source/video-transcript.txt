@@ -1,0 +1,702 @@
+Transcript
+
+
+Search in video
+0:00
+You know what's kind of weird? When
+0:02
+someone asks, "What kind of games do you
+0:04
+like?" Most people struggle to answer.
+0:06
+You say, "Tactical shooters." And they
+0:08
+respond, "Oh, so you must like
+0:10
+Counter-Strike, Valerant, and Rainbow
+0:12
+Six Siege." And you say, "Eh, actually
+0:16
+only Counterstrike." You say strategy
+0:18
+games and someone recommends you
+0:19
+Civilization when you wanted something
+0:21
+more like Hearthstone. Game genres are
+0:24
+kind of broken. But I think there's a
+0:26
+better way to think about this and it's
+0:28
+a much simpler way to look at games. And
+0:31
+once you see it, you'll see games much
+0:33
+more differently. But let's start
+0:35
+somewhere everyone can agree. Every game
+0:37
+has something that separates the good
+0:39
+players from the bad ones. Sometimes
+0:41
+it's pure skill, your reflexes, your
+0:44
+aim, your timing. Sometimes it's
+0:47
+information, knowing things the other
+0:49
+person doesn't. Sometimes it's something
+0:52
+harder to name. [music] The mental side.
+0:55
+Reading people, managing randomness, and
+0:57
+adapting on the fly.
+1:00
+These aren't just different skills. They
+1:03
+are fundamentally different kinds of
+1:04
+gameplay. And most games mix them
+1:07
+together in different [music] amounts.
+1:09
+So, let me give you three words: micro,
+1:12
+messo, macro.
+1:16
+Now, here's where it gets interesting
+1:18
+and a little uncomfortable. What if I
+1:20
+told you the clearest way to understand
+1:22
+what a game is actually testing is to
+1:25
+think about how you'd cheat in it? If
+1:28
+you wanted to completely break a game to
+1:30
+make it trivially easy, what cheat would
+1:34
+you [music] use? The answer to that
+1:36
+question tells you more about a game
+1:38
+than any genre label ever could. [music]
+1:41
+So, let's put this to the test. What is
+1:45
+micro?
+1:46
+Micro is the execution layer. It's your
+1:49
+aim, your timing, your movement, your
+1:51
+muscle memory. [music] An example of a
+1:53
+microcheat looks like an aimbot. Perfect
+1:57
+inputs every single time. If a game can
+2:00
+be broken by perfect execution, that's a
+2:03
+micro game. OSU, Geometry Dash, Aim
+2:06
+Trainers, and Tetris are a few examples.
+2:09
+You can cheat in OSU with perfect cursor
+2:12
+tracking. You can cheat in Geometry Dash
+2:14
+with perfect jumps. These are execution
+2:17
+cheats and you can feel the microness
+2:19
+when you play them.
+2:22
+Mezo is the probability layer, the place
+2:25
+where mind games exist. You're reacting
+2:27
+to the unpredictable nature of people,
+2:30
+not mechanics. A messo cheat looks like
+2:33
+stream sniping, knowing someone's habits
+2:35
+before they show them, reading
+2:37
+cooldowns, seeing things you shouldn't
+2:40
+see yet. The best example [music] for
+2:42
+the purest messo game is rock paper
+2:44
+scissors. There's zero execution skill.
+2:47
+It's [music] entirely mental and
+2:49
+probability. Among Us also runs on meo.
+2:53
+So does Liars bar. Even the stock market
+2:55
+is built around this layer. If you
+2:57
+wanted to cheat in Among Us, you'd
+2:59
+stream snipe to know who the impostor
+3:01
+[music] is. If you wanted to cheat in
+3:03
+stocks, you'd insider trade. Notice how
+3:06
+none of these cheats involve executing
+3:08
+anything better. They involve knowing
+3:10
+something you shouldn't.
+3:12
+Macro is the systems layer. It's your
+3:15
+routing, your resource management, and
+3:17
+your win condition. You can think of it
+3:20
+like the mathematically correct way of
+3:22
+winning the game. A macro cheat looks
+3:24
+like a chess engine, [music] economy
+3:27
+automation, or you can imagine like a
+3:29
+perfect coach telling you exactly what
+3:31
+to do.
+3:31
+Baron, ping it, ping it, ping it. We
+3:34
+need to let our team know what's [music]
+3:35
+up. Pure macro games are almost
+3:37
+mathematical puzzles. Think Factorio,
+3:40
+Polybridge, Connect 4, tic-tac-toe. Once
+3:43
+you find the optimal solution, the game
+3:46
+is solved. But here's where it gets
+3:49
+really interesting. Most games aren't
+3:51
+just one of these. They're combinations
+3:53
+of them. And the combination tells you
+3:55
+everything about what kind of game it
+3:56
+is. So, let's look at micro plus macro.
+4:01
+These tend to be single player precision
+4:03
+games. You need to know the optimal
+4:06
+solution and execute it fast. Think
+4:08
+Rubik's Cube speedrunning, Mario 64,
+4:12
+jump king, and getting [music] over it.
+4:15
+If you were to have a perfect micro
+4:16
+cheat in Elen Ring, you'd have perfect
+4:19
+dodges. But if you were to have a
+4:21
+perfect macro cheat, you'd use the
+4:23
+mathematically optimal build. But
+4:25
+there's one weird multiplayer outlier
+4:27
+here, eightball pool. There's a
+4:30
+mathematically optimal shot and then
+4:32
+there's the skill of actually hitting
+4:34
+it. So even though it is player versus
+4:36
+player, the room for mind games doesn't
+4:39
+really exist and I think it's a rare
+4:41
+exception. Next, let's look at micro
+4:44
+plus mezo. This is PvP skill expression
+4:47
+games. These tend to be your fighting
+4:50
+games. Street Fighter, Tekken, Smash
+4:53
+Bros, Brawhalla. your skill matters and
+4:56
+reading your opponents matters, but also
+4:58
+you have some other examples like Mario
+5:00
+Kart, like the micro of driving and the
+5:03
+messo of random items and unpredictable
+5:05
+opponents. We even see some unique games
+5:07
+like Tetris 999. The original Tetris is
+5:10
+pure micro, but Tetris 99 also involves
+5:14
+Mezo because now you're managing who to
+5:16
+send garbage to. You also have
+5:18
+physics-based PvP like Fall Guys and
+5:21
+Gang Beast, which also fits into Micro
+5:24
+Plus Mezo. The next one is Mezo plus
+5:27
+Macro. These are the mind and math
+5:29
+games. Think Hearthstone, TFT, Pokémon
+5:33
+VGC, and Battleship. Now, chess is
+5:36
+theoretically a pure macro game, but at
+5:38
+the human level, there's a massive messo
+5:40
+component. You're optimizing for your
+5:43
+specific opponent's habits. That's why
+5:45
+studying opponent matters in highlevel
+5:47
+chess. And then there are some weird
+5:49
+outliers. Bellatro is a singleplayer
+5:52
+game, but it's also mezo macro because
+5:55
+the RNG of the card combines with the
+5:57
+math of maximizing your hand. You're not
+6:00
+executing anything difficult, but you
+6:02
+have to pick and choose your cards
+6:03
+wisely and play to their biggest
+6:05
+strength. Phasmophobia is also a weird
+6:08
+game that fits into Mezo Macro. It's a
+6:10
+co-op game, but it fits here because
+6:12
+you're deducing a ghost using evidence,
+6:14
+which is macro, while the ghost behavior
+6:16
+has RNG, mezo. Although, I suspect
+6:20
+non-PVP meo macro games slowly converge
+6:23
+towards pure macro over time. Once
+6:26
+players fully map the RNG, it stops
+6:28
+feeling uncertain and becomes a speedrun
+6:30
+problem. And then there's the middle,
+6:34
+all three overlapping. This is where the
+6:37
+biggest [music] competitive games live.
+6:40
+League of Legends, Dota 2, CS2,
+6:43
+Valerant, Overwatch, Marvel Rivals,
+6:46
+Rocket League, Apex, Rainbow 6, World of
+6:49
+Warcraft. But here's the thing, they're
+6:52
+not all the same balance.
+6:54
+And the cheat test tells you how exactly
+6:56
+they differ. So, let's use
+6:58
+Counter-Strike as an example. Can aimbot
+7:01
+win a game of CS completely alone?
+7:04
+Almost certainly yes. If you never miss,
+7:08
+most duels are over before they start.
+7:11
+That makes micro extremely high in CS2.
+7:14
+But what about X-ray seeing through
+7:16
+walls? Pros have done experiments with
+7:19
+one player with X-ray versus five
+7:21
+without X-ray. The five still usually
+7:23
+win, but the X-ray player takes rounds
+7:25
+they have no business taking. This makes
+7:28
+me very high in CS22,
+7:31
+which means macro, the strategic layer,
+7:34
+is relatively the lowest. CS isn't about
+7:37
+long-term economy optimization the way
+7:39
+MOBAs are. The rounds are short and the
+7:42
+execution is everything.
+7:45
+But let's try this test with Overwatch.
+7:47
+And right away, we see a unique case
+7:49
+because the answer actually depends on
+7:52
+your role. But since it varies so
+7:54
+heavily by character and roles, I
+7:56
+decided to ask someone who knows about
+7:58
+Overwatch way better than I do.
+8:04
+So if you compare all three like maxed
+8:07
+out versions of the perfect version of
+8:09
+it, like a cheat version of it,
+8:11
+which one would have like the highest
+8:13
+win rate and how would the distribution
+8:15
+be? I would just say support is more
+8:17
+macroheavy, DPS is more microheavy, and
+8:20
+then tank is more messy.
+8:23
+Oh, okay. Okay.
+8:25
+Also, the way that it works is you have
+8:28
+offense, defense, and control.
+8:30
+Um, control refers to like map control.
+8:33
+Offense refers to offensive options,
+8:35
+defense refers to defensive options. And
+8:38
+if you a a character's mixture or or
+8:41
+like kind of design links to the this
+8:44
+concept of uh offense, defense, and
+8:46
+control, tanks tend to depend on more
+8:49
+control, supports, more defense, DPS,
+8:52
+more offense. And if you if you actually
+8:54
+like dissect each individual hero, they
+8:57
+will have different like varying levels
+9:00
+or varying focuses on offense, defense,
+9:02
+or control.
+9:03
+So I'm thinking about it like this,
+9:05
+right? If you were to give each role one
+9:08
+cheat, you would give aimbot to DPS. And
+9:12
+for
+9:13
+tank, you would give um the ability to
+9:16
+see enemy cooldowns [music] as a perfect
+9:18
+cheat, right?
+9:20
+And
+9:20
+yeah,
+9:21
+for supports, you would have uh a coach
+9:24
+or an engine. Perfect coach.
+9:26
+Yes, that's that's perfect. That's
+9:28
+that's exactly perfect. And also,
+9:30
+especially in Overwatch cuz it's it's
+9:31
+5v5 cuz you only have uh one tank. Like
+9:34
+if you can um win every duel as a tank,
+9:37
+that's kind of like a free win for your
+9:39
+team.
+9:40
+But what about Apex? Apex sits
+9:43
+remarkably balanced across all three. If
+9:46
+you think about which player is most
+9:47
+likely to win, a guy with perfect
+9:49
+aimbot, a guy with perfect wall hacks,
+9:52
+or a guy with perfect ring knowledge,
+9:54
+all three actually has a pretty good
+9:56
+chance of winning the game. If you have
+9:58
+aimbot, you can easily kill anyone
+10:00
+rotating. But any close-range fight will
+10:02
+tend to go either way. But with perfect
+10:05
+wall hacks, you can use your nades and
+10:07
+abilities to take a team down, but
+10:09
+you'll still lose to someone with good
+10:11
+ring positioning. But even with perfect
+10:13
+ringed information, you could still
+10:15
+easily die to someone who wants to
+10:16
+contest that position. But let's test
+10:18
+this in a really unique game, Rocket
+10:21
+League. I asked Pro Rocket League coach
+10:24
+Luke on his answer to this thought
+10:26
+experiment and this was his response.
+10:28
+Basically, perfect micro or perfect
+10:30
+mechanics in Rocket League would be
+10:32
+defined as taking the ball from point A
+10:35
+to point B as quickly and as efficiently
+10:37
+as possible. Like how in a firstp person
+10:39
+shooter, aimbot moves the crosshair to
+10:42
+the target as quickly and as efficiently
+10:44
+as possible.
+10:46
+For Rocket League, smarts cannot make up
+10:49
+for the fact that a more mechanical
+10:50
+person can just take the ball to the
+10:52
+open net far more than someone with less
+10:55
+mechanics. [music] This makes Rocket
+10:56
+League heavily micro dominant. But after
+10:59
+micro being the most dominant, he put
+11:02
+macro second and meo last. This is
+11:04
+because even if perfect Mezo allows you
+11:06
+to hear enemy coms or see enemy boost,
+11:10
+doesn't change the fact that all
+11:11
+information in Rocket League is able to
+11:14
+be known at all times. And for how
+11:16
+fast-paced the game is at the highest
+11:18
+level, listening to a perfect coach
+11:20
+verbatim would be better over hearing
+11:22
+enemy comms or seeing enemy boost. Also,
+11:25
+the closest thing to perfect micro in
+11:27
+Rocket League is the AI bots. I came
+11:30
+across footage of three semi-pro players
+11:33
+versus three of the best Rocket League
+11:35
+AI. What? Crap. Andrew,
+11:39
+oh my god.
+11:41
+And the three AI bot were able to win
+11:43
+comfortably.
+11:45
+So, here's what this framework actually
+11:47
+gives you. It helps classify games, but
+11:50
+it also helps understand yourself as a
+11:53
+player. I noticed something when I
+11:54
+looked at which games I genuinely enjoy.
+11:57
+I gravitate toward games in the middle,
+11:59
+the full micro mezo macro cluster, and
+12:02
+toward pure micro and pure macro. But I
+12:04
+don't really enjoy micro macro games.
+12:07
+[music] Speedrunning doesn't scratch the
+12:08
+right itch for me. And when I looked at
+12:11
+why [music] it mapped exactly in Apex,
+12:14
+I'd argue I aim pretty well and have
+12:16
+respectable movement. I'd say I also
+12:18
+have a solid understanding of rotations
+12:20
+and ring positioning, but I tend to
+12:22
+tunnel vision in close quarter fights,
+12:24
+specifically when we're in the same
+12:26
+building. So, I tend to miss meo reads
+12:29
+when the pressure is high. And this
+12:31
+exactly explains the gap in my game.
+12:33
+Because here's the real insight. Every
+12:35
+player has a natural lean. Some people
+12:37
+are micro players. They grind mechanics
+12:40
+obsessively and they want the skill gap
+12:42
+to feel fair. Some people are mess
+12:45
+players. They love raiding people and
+12:47
+they thrive in the chaos of PvP
+12:49
+randomness. Like we even see a common
+12:51
+cluster of people who play Among Us,
+12:53
+GTA, luck based games like gambling
+12:56
+along with many other party games. And
+12:58
+then we also see that some players are
+13:00
+macro players. They love efficiency.
+13:02
+They draw routes on maps. They think
+13:04
+about the game between games more than
+13:06
+during it. And most of us are a mix, but
+13:10
+not an equal mix. The games that
+13:12
+frustrate you the most, they're probably
+13:14
+demanding something your brain doesn't
+13:16
+naturally give. The games you keep
+13:18
+coming back to, they're probably
+13:20
+rewarding the part of you that already
+13:22
+runs at full power. Genre labels never
+13:25
+told you any of this. Action RPG doesn't
+13:27
+tell you whether you'll be grinding
+13:29
+execution, reading opponents, or solving
+13:31
+systems. It just tells you there's a
+13:33
+sword and a level bar. And maybe more
+13:36
+importantly, you can stop blaming
+13:38
+yourself when a game doesn't click. Cuz
+13:40
+maybe the games are testing things you
+13:42
+haven't built yet. In my case, [music]
+13:44
+it's the underdevelopment of Mezo. And
+13:47
+that's the three dimensions of games.
+13:49
+Micro, messo, macro. Every game lives
+13:52
+somewhere inside them. And now that you
+13:54
+know where to look, you'll never see a
+13:56
+game the same way again.

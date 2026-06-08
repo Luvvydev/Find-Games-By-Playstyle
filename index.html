@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillMap Games</title>
+    <meta name="description" content="Take a short quiz and find games by what they test: execution, reads, systems, atmosphere, friction, and playstyle." />
+    <link rel="stylesheet" href="./styles.css?v=steam-backend-v1" />
+  </head>
+  <body>
+    <main class="site-shell">
+      <header class="topbar" aria-label="SkillMap header">
+        <div class="brand-lockup">
+          <img class="brand-logo" src="./assets/skillmap-logo.svg" alt="SkillMap" />
+          <div>
+            <p class="brand-name">SkillMap</p>
+            <p class="brand-subtitle">games by playstyle</p>
+          </div>
+        </div>
+
+        <nav class="top-actions" aria-label="Extra tools">
+          <button class="ghost-button" type="button" data-panel="methodPanel">Cheat test</button>
+          <button class="ghost-button" type="button" data-panel="libraryPanel" id="steamTopButton">Connect Steam</button>
+          <button class="ghost-button" type="button" data-panel="databasePanel">Browse games</button>
+        </nav>
+      </header>
+
+      <section class="main-grid" aria-label="SkillMap app">
+        <section class="media-column" aria-label="Reference and video">
+          <button class="reference-card" id="openReference" type="button" aria-label="Open micro meso macro reference image">
+            <img src="./assets/micro-meso-macro-reference.jpeg" alt="Micro meso macro game map reference" />
+            <span>Zoom</span>
+          </button>
+
+          <section class="video-card" aria-label="Video framework">
+            <iframe src="https://www.youtube.com/embed/NgHvdCcmQ4o?si=RC_5yBeuS5C6mfSc" title="Once you see this, You’ll see Competitive Games Differently" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </section>
+
+          <div class="axis-strip" aria-label="Skill axes">
+            <div><strong>Micro</strong><span>execution</span></div>
+            <div><strong>Meso</strong><span>reads</span></div>
+            <div><strong>Macro</strong><span>systems</span></div>
+          </div>
+        </section>
+
+        <section class="quiz-card" aria-label="Playstyle quiz">
+          <div class="quiz-progress" aria-label="Quiz progress">
+            <span id="progressText">1 / 12</span>
+            <div class="progress-track"><span id="progressBar"></span></div>
+          </div>
+          <div class="quiz-body" id="quizMount" aria-live="polite"></div>
+        </section>
+      </section>
+    </main>
+
+    <dialog class="modal" id="methodPanel" aria-label="Cheat test explanation">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">The model</p>
+          <h2>The cheat test</h2>
+        </div>
+        <button class="close-button" type="button" data-close>Close</button>
+      </div>
+      <div class="method-list">
+        <article>
+          <strong>Micro</strong>
+          <p>Perfect aim, timing, movement, or inputs would break the game.</p>
+        </article>
+        <article>
+          <strong>Meso</strong>
+          <p>Hidden information, opponent habits, cooldown reads, or mind games would break the game.</p>
+        </article>
+        <article>
+          <strong>Macro</strong>
+          <p>A perfect coach, solver, route, economy plan, or build planner would break the game.</p>
+        </article>
+      </div>
+    </dialog>
+
+    <dialog class="modal wide" id="databasePanel" aria-label="Game browser">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">Database</p>
+          <h2><span id="resultCount">0</span> games</h2>
+        </div>
+        <button class="close-button" type="button" data-close>Close</button>
+      </div>
+      <div class="search-tools">
+        <input id="searchInput" type="search" placeholder="Search games or tags" aria-label="Search games" />
+        <div class="filter-row" id="quickFilters">
+          <button data-filter="all" class="filter-button active" type="button">All</button>
+          <button data-filter="low-friction" class="filter-button" type="button">Low friction</button>
+          <button data-filter="solo" class="filter-button" type="button">Solo</button>
+          <button data-filter="competitive" class="filter-button" type="button">Competitive</button>
+          <button data-filter="immersive" class="filter-button" type="button">Immersive</button>
+          <button data-filter="cozy" class="filter-button" type="button">Cozy</button>
+          <button data-filter="story" class="filter-button" type="button">Story</button>
+          <button data-filter="not-owned" class="filter-button" type="button">Not owned</button>
+        </div>
+      </div>
+      <div id="gameGrid" class="game-grid"></div>
+    </dialog>
+
+
+
+    <dialog class="modal" id="libraryPanel" aria-label="Steam connection">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">Personalize results</p>
+          <h2>Connect Steam</h2>
+        </div>
+        <button class="close-button" type="button" data-close>Close</button>
+      </div>
+      <div class="steam-connect-panel" id="steamConnectPanel">
+        <div class="steam-status-card" id="steamStatusCard">
+          <span class="steam-dot"></span>
+          <div>
+            <strong id="steamStatusTitle">Steam not connected</strong>
+            <p id="steamStatusCopy">Connect Steam to hide games you already own, push heavily played games lower, and show new games first.</p>
+          </div>
+        </div>
+
+        <div class="steam-action-grid">
+          <button class="steam-primary" type="button" id="connectSteamButton">
+            <span class="steam-icon">↗</span>
+            <span>Connect Steam</span>
+          </button>
+          <button class="steam-secondary" type="button" id="skipSteamButton">Skip for now</button>
+        </div>
+        <p class="steam-message" id="steamMessage" data-tone=""></p>
+
+        <div class="steam-benefits">
+          <article>
+            <strong>Hide owned games</strong>
+            <span>Recommendations focus on games you have not already bought.</span>
+          </article>
+          <article>
+            <strong>Downrank high playtime</strong>
+            <span>Games you already played a lot stop wasting result slots.</span>
+          </article>
+          <article>
+            <strong>New to you first</strong>
+            <span>Closest matches are sorted toward fresh options first.</span>
+          </article>
+        </div>
+
+        <div class="steam-connected-actions" id="steamConnectedActions">
+          <button class="secondary-button" type="button" id="disconnectSteamButton">Disconnect</button>
+          <button class="secondary-button" type="button" id="resetSteamChoiceButton">Ask me again</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal image-modal" id="referencePanel" aria-label="Reference image">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow">Original reference</p>
+          <h2>Micro, meso, macro map</h2>
+        </div>
+        <div class="zoom-controls">
+          <button class="close-button" type="button" id="zoomOut">−</button>
+          <button class="close-button" type="button" id="zoomReset">100%</button>
+          <button class="close-button" type="button" id="zoomIn">+</button>
+          <button class="close-button" type="button" data-close>Close</button>
+        </div>
+      </div>
+      <div class="zoom-stage">
+        <img id="zoomImage" src="./assets/micro-meso-macro-reference.jpeg" alt="Micro meso macro game map reference" />
+      </div>
+    </dialog>
+
+    <script type="module" src="./src/app.js?v=steam-backend-v1"></script>
+  </body>
+</html>
