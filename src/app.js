@@ -1307,12 +1307,74 @@ function renderGameList() {
   `).join("");
 }
 
-function setZoom(next) {
-  state.zoom = clamp(next, 80, 260);
+function setZoom(next, origin) {
+  const previousZoom = state.zoom;
+  const stage = qs(".zoom-stage");
   const image = qs("#zoomImage");
   const reset = qs("#zoomReset");
+  const nextZoom = clamp(next, 80, 260);
+  const anchor = origin && stage
+    ? {
+        x: origin.clientX - stage.getBoundingClientRect().left,
+        y: origin.clientY - stage.getBoundingClientRect().top,
+      }
+    : null;
+
+  state.zoom = nextZoom;
   if (image) image.style.width = `${state.zoom}%`;
   if (reset) reset.textContent = `${state.zoom}%`;
+
+  if (stage && anchor && previousZoom > 0) {
+    const ratio = state.zoom / previousZoom;
+    stage.scrollLeft = (stage.scrollLeft + anchor.x) * ratio - anchor.x;
+    stage.scrollTop = (stage.scrollTop + anchor.y) * ratio - anchor.y;
+  }
+}
+
+function wireZoomPan() {
+  const stage = qs(".zoom-stage");
+  if (!stage) return;
+
+  let dragging = false;
+  let startX = 0;
+  let startY = 0;
+  let startScrollLeft = 0;
+  let startScrollTop = 0;
+
+  stage.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    setZoom(state.zoom + (event.deltaY < 0 ? 20 : -20), event);
+  }, { passive: false });
+
+  stage.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    dragging = true;
+    startX = event.clientX;
+    startY = event.clientY;
+    startScrollLeft = stage.scrollLeft;
+    startScrollTop = stage.scrollTop;
+    stage.classList.add("dragging");
+    stage.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  });
+
+  stage.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+    stage.scrollLeft = startScrollLeft - (event.clientX - startX);
+    stage.scrollTop = startScrollTop - (event.clientY - startY);
+  });
+
+  const stopDragging = (event) => {
+    if (!dragging) return;
+    dragging = false;
+    stage.classList.remove("dragging");
+    if (stage.hasPointerCapture(event.pointerId)) {
+      stage.releasePointerCapture(event.pointerId);
+    }
+  };
+
+  stage.addEventListener("pointerup", stopDragging);
+  stage.addEventListener("pointercancel", stopDragging);
 }
 
 function openPanel(id) {
@@ -1356,6 +1418,7 @@ function wireEvents() {
   qs("#zoomIn")?.addEventListener("click", () => setZoom(state.zoom + 25));
   qs("#zoomOut")?.addEventListener("click", () => setZoom(state.zoom - 25));
   qs("#zoomReset")?.addEventListener("click", () => setZoom(100));
+  wireZoomPan();
 
   qs("#searchInput")?.addEventListener("input", (event) => {
     state.search = event.target.value;
