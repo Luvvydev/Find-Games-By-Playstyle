@@ -38,14 +38,21 @@ http://localhost:3002
 
 Steam login is optional.
 
-Create a `.env` file if you want it enabled:
+Local Steam login works through `server.js`:
 
-```env
-STEAM_API_KEY=your_steam_api_key
-SESSION_SECRET=your_session_secret
-PUBLIC_URL=http://localhost:3002
-PORT=3002
+```bash
+cp .env.example .env
+npm install
+npm start
 ```
+
+For GitHub Pages, the frontend is static and the Steam login needs a separate Node backend. This repo includes `render.yaml` for deploying the backend to Render at:
+
+```text
+https://find-games-by-playstyle.onrender.com
+```
+
+If your backend URL is different, update `SKILLMAP_STEAM_BACKEND_URL` in `index.html`. More details are in `README_STEAM_BACKEND.md`.
 
 Do not commit `.env`.
 

@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: find-games-by-playstyle
+    env: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PUBLIC_URL
+        value: https://find-games-by-playstyle.onrender.com
+      - key: FRONTEND_URL
+        value: https://luvvydev.github.io/Find-Games-By-Playstyle
+      - key: ALLOWED_ORIGINS
+        value: https://luvvydev.github.io
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: STEAM_API_KEY
+        sync: false

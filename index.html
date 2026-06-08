@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SkillMap Games</title>
     <meta name="description" content="Take a short quiz and find games by what they test: execution, reads, systems, atmosphere, friction, and playstyle." />
-    <link rel="stylesheet" href="./styles.css?v=steam-backend-v1" />
+    <link rel="stylesheet" href="./styles.css?v=steam-backend-v2" />
   </head>
   <body>
     <main class="site-shell">
@@ -170,8 +170,10 @@
     </dialog>
 
     <script>
-      window.SKILLMAP_STEAM_BACKEND_URL = "";
+      window.SKILLMAP_STEAM_BACKEND_URL = window.location.hostname.endsWith("github.io")
+        ? "https://find-games-by-playstyle.onrender.com"
+        : "";
     </script>
-    <script type="module" src="./src/app.js?v=steam-backend-v1"></script>
+    <script type="module" src="./src/app.js?v=steam-backend-v2"></script>
   </body>
 </html>

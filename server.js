@@ -11,10 +11,12 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = Number(process.env.PORT || 3002);
 const PUBLIC_URL = (process.env.PUBLIC_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
-const FRONTEND_URL = (process.env.FRONTEND_URL || PUBLIC_URL).replace(/\/$/, '');
+const DEFAULT_FRONTEND_URL = 'https://luvvydev.github.io/Find-Games-By-Playstyle';
+const FRONTEND_URL = (process.env.FRONTEND_URL || (PUBLIC_URL.includes('localhost') ? PUBLIC_URL : DEFAULT_FRONTEND_URL)).replace(/\/$/, '');
 const PUBLIC_ORIGIN = new URL(PUBLIC_URL).origin;
 const FRONTEND_ORIGIN = new URL(FRONTEND_URL).origin;
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || process.env.ALLOWED_ORIGIN || FRONTEND_ORIGIN)
+const defaultAllowedOrigins = Array.from(new Set([FRONTEND_ORIGIN, new URL(DEFAULT_FRONTEND_URL).origin])).join(',');
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || process.env.ALLOWED_ORIGIN || defaultAllowedOrigins)
   .split(',')
   .map((origin) => origin.trim())
   .filter(Boolean)

@@ -1,20 +1,8 @@
 # Steam backend setup
 
-This app needs a backend for Steam login because the Steam API key must stay private.
+This app needs a Node backend for Steam login because the Steam API key must stay private. GitHub Pages only hosts the static frontend.
 
-## 1. Get a Steam Web API key
-
-Go to the Steam Web API key page while logged into Steam:
-
-https://steamcommunity.com/dev/apikey
-
-Use this local domain while developing:
-
-localhost
-
-Do not commit your real API key.
-
-## 2. Create `.env`
+## Local setup
 
 Copy `.env.example` to `.env`:
 
@@ -33,7 +21,7 @@ ALLOWED_ORIGINS=http://localhost:3002
 PORT=3002
 ```
 
-## 3. Run the site through Node, not Python
+Run the app through Node:
 
 ```bash
 npm install
@@ -42,15 +30,62 @@ npm start
 
 Open:
 
-```bash
+```text
 http://localhost:3002
 ```
 
-Now Connect Steam redirects through the backend, verifies Steam OpenID, loads owned games, and hides owned games from recommendations.
+## GitHub Pages setup
+
+The static site now points Steam requests to:
+
+```text
+https://find-games-by-playstyle.onrender.com
+```
+
+That URL is set in `index.html`:
+
+```js
+window.SKILLMAP_STEAM_BACKEND_URL = window.location.hostname.endsWith("github.io")
+  ? "https://find-games-by-playstyle.onrender.com"
+  : "";
+```
+
+Deploy `server.js` separately on Render or another Node host. The included `render.yaml` is configured for Render with this backend URL.
+
+Required backend environment values:
+
+```env
+STEAM_API_KEY=your_real_key_here
+SESSION_SECRET=generated_or_long_random_string
+PUBLIC_URL=https://find-games-by-playstyle.onrender.com
+FRONTEND_URL=https://luvvydev.github.io/Find-Games-By-Playstyle
+ALLOWED_ORIGINS=https://luvvydev.github.io
+```
+
+If Render gives the service a different URL, update both `PUBLIC_URL` on the backend and `SKILLMAP_STEAM_BACKEND_URL` in `index.html` to match that real HTTPS backend URL.
+
+## Steam API key page
+
+Go to:
+
+```text
+https://steamcommunity.com/dev/apikey
+```
+
+For local testing, use:
+
+```text
+localhost
+```
+
+For the deployed backend, use the backend host domain, for example:
+
+```text
+find-games-by-playstyle.onrender.com
+```
+
+Do not commit `.env` or your real API key.
 
 ## Notes
 
 If Steam returns zero games, the user's Steam profile game details may be private.
-GitHub Pages can only host the static frontend. It cannot run the Steam login/API backend.
-
-For deployment, host `server.js` on a Node host such as Render, Railway, Fly.io, or your own VPS. Set `PUBLIC_URL` to that backend HTTPS domain. Set `FRONTEND_URL` and `ALLOWED_ORIGINS` to your GitHub Pages URL, for example `https://luvvydev.github.io/Find-Games-By-Playstyle`. Then set `window.SKILLMAP_STEAM_BACKEND_URL` in `index.html` to the backend HTTPS domain. Add the backend domain to the Steam API key page.

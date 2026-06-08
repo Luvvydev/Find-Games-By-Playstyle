@@ -21,6 +21,17 @@ function steamBackendAvailable() {
   return !steamRunsOnStaticPages;
 }
 
+async function readSteamBackendConfig() {
+  const response = await fetch(steamEndpoint("/api/steam/config"), { credentials: "include" });
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(payload.error || "Steam backend is not reachable.");
+  }
+
+  return payload;
+}
+
 const steamIds = {
   "Geometry Dash": "322170",
   "Aim Lab": "714010",
@@ -1187,9 +1198,22 @@ async function refreshSteamSession(options = {}) {
   }
 }
 
-function connectSteam() {
+async function connectSteam() {
   if (!steamBackendAvailable()) {
     setSteamMessage("Steam login needs the Node backend. GitHub Pages only hosts the static site, so deploy server.js separately and set SKILLMAP_STEAM_BACKEND_URL in index.html.", "error");
+    return;
+  }
+
+  setSteamMessage("Checking Steam backend...", "info");
+
+  try {
+    const config = await readSteamBackendConfig();
+    if (!config.ready) {
+      setSteamMessage("Steam backend is online, but STEAM_API_KEY is missing on the backend host.", "error");
+      return;
+    }
+  } catch (error) {
+    setSteamMessage(error.message || "Steam backend is not reachable. Deploy server.js first, then update SKILLMAP_STEAM_BACKEND_URL in index.html.", "error");
     return;
   }
 
