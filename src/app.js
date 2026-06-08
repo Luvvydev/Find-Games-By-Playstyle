@@ -405,6 +405,7 @@ const state = {
   search: "",
   quick: "all",
   zoom: 100,
+  pan: null,
   library: readJsonLocal(storageKeys.library, {}),
   hideOwned: localStorage.getItem(storageKeys.hideOwned) !== "false",
   steamSkipped: localStorage.getItem(storageKeys.steamSkipped) === "true",
@@ -1260,12 +1261,78 @@ function renderGameList() {
   `).join("");
 }
 
-function setZoom(next) {
-  state.zoom = clamp(next, 80, 260);
+function setZoom(next, focalEvent = null) {
+  const stage = qs(".zoom-stage");
   const image = qs("#zoomImage");
   const reset = qs("#zoomReset");
-  if (image) image.style.width = `${state.zoom}%`;
+  const previousZoom = state.zoom;
+  const nextZoom = clamp(next, 80, 260);
+
+  if (!image) {
+    state.zoom = nextZoom;
+    if (reset) reset.textContent = `${state.zoom}%`;
+    return;
+  }
+
+  let focalX = null;
+  let focalY = null;
+  let stageX = null;
+  let stageY = null;
+
+  if (stage && focalEvent) {
+    const rect = stage.getBoundingClientRect();
+    stageX = focalEvent.clientX - rect.left;
+    stageY = focalEvent.clientY - rect.top;
+    focalX = stage.scrollLeft + stageX;
+    focalY = stage.scrollTop + stageY;
+  }
+
+  state.zoom = nextZoom;
+  image.style.width = `${state.zoom}%`;
   if (reset) reset.textContent = `${state.zoom}%`;
+
+  if (stage && focalX !== null && focalY !== null && previousZoom > 0) {
+    const ratio = state.zoom / previousZoom;
+    stage.scrollLeft = Math.max(0, focalX * ratio - stageX);
+    stage.scrollTop = Math.max(0, focalY * ratio - stageY);
+  }
+}
+
+function startZoomPan(event) {
+  if (event.button !== 0) return;
+  const stage = event.currentTarget;
+  state.pan = {
+    pointerId: event.pointerId,
+    x: event.clientX,
+    y: event.clientY,
+    left: stage.scrollLeft,
+    top: stage.scrollTop,
+  };
+  stage.classList.add("dragging");
+  stage.setPointerCapture?.(event.pointerId);
+  event.preventDefault();
+}
+
+function moveZoomPan(event) {
+  if (!state.pan) return;
+  const stage = event.currentTarget;
+  stage.scrollLeft = state.pan.left - (event.clientX - state.pan.x);
+  stage.scrollTop = state.pan.top - (event.clientY - state.pan.y);
+}
+
+function endZoomPan(event) {
+  const stage = event.currentTarget;
+  if (state.pan?.pointerId === event.pointerId) {
+    stage.releasePointerCapture?.(event.pointerId);
+    state.pan = null;
+  }
+  stage.classList.remove("dragging");
+}
+
+function handleZoomWheel(event) {
+  event.preventDefault();
+  const step = event.deltaY > 0 ? -15 : 15;
+  setZoom(state.zoom + step, event);
 }
 
 function openPanel(id) {
@@ -1309,6 +1376,13 @@ function wireEvents() {
   qs("#zoomIn")?.addEventListener("click", () => setZoom(state.zoom + 25));
   qs("#zoomOut")?.addEventListener("click", () => setZoom(state.zoom - 25));
   qs("#zoomReset")?.addEventListener("click", () => setZoom(100));
+
+  const zoomStage = qs(".zoom-stage");
+  zoomStage?.addEventListener("wheel", handleZoomWheel, { passive: false });
+  zoomStage?.addEventListener("pointerdown", startZoomPan);
+  zoomStage?.addEventListener("pointermove", moveZoomPan);
+  zoomStage?.addEventListener("pointerup", endZoomPan);
+  zoomStage?.addEventListener("pointercancel", endZoomPan);
 
   qs("#searchInput")?.addEventListener("input", (event) => {
     state.search = event.target.value;
