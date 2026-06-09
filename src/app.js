@@ -438,15 +438,15 @@ const state = {
 const quizQuestions = [
   {
     id: "intent",
-    title: "What should the game do for you?",
+    title: "What kind of experience are you looking for?",
     helper: "Pick more than one if needed. Strength changes the recommendation.",
     choices: [
-      { label: "Give me a competitive ladder to climb", delta: { micro: 20, meso: 18, macro: 14, stress: 20, teamReliance: 10, cozy: -22, story: -10 } },
-      { label: "Let me relax without pressure", delta: { cozy: 44, stress: -38, friction: -18, teamReliance: -18, micro: -10 } },
-      { label: "Pull me into a world", delta: { immersion: 40, story: 22, exploration: 24, stress: -8 } },
-      { label: "Give me systems to solve", delta: { macro: 38, friction: 18, creativity: 10, story: -8 } },
-      { label: "Give me funny chaos with people", delta: { meso: 30, teamReliance: 22, novelty: 26, stress: -4 } },
-      { label: "Let me build, decorate, or create", delta: { creativity: 44, cozy: 22, macro: 12, stress: -18 } },
+      { label: "A competitive ladder to climb", group: "Challenge", delta: { micro: 20, meso: 18, macro: 14, stress: 20, teamReliance: 10, cozy: -22, story: -10 } },
+      { label: "Systems to solve and master", group: "Challenge", delta: { macro: 38, friction: 18, creativity: 10, story: -8 } },
+      { label: "Relax without pressure", group: "Mood", delta: { cozy: 44, stress: -38, friction: -18, teamReliance: -18, micro: -10 } },
+      { label: "Get pulled into a world", group: "Mood", delta: { immersion: 40, story: 22, exploration: 24, stress: -8 } },
+      { label: "Funny chaos with other people", group: "Social", delta: { meso: 30, teamReliance: 22, novelty: 26, stress: -4 } },
+      { label: "Build, decorate, or create", group: "Expression", delta: { creativity: 44, cozy: 22, macro: 12, stress: -18 } },
     ],
   },
   {
@@ -723,7 +723,8 @@ function describeLike(game) {
   if (axis === "meso") phrases.push("reads and adaptation");
   if (axis === "macro") phrases.push("planning and systems");
   if (game.teamReliance <= 25) phrases.push("mostly on you");
-  return phrases.slice(0, 2).join(". ") + ".";
+  const visible = phrases.slice(0, 2);
+  return visible.length ? visible.join(". ") + "." : "Broad fit across your current answers.";
 }
 
 function describeBounce(game) {
@@ -734,8 +735,21 @@ function describeBounce(game) {
   if (game.navigation <= 55) warnings.push("unclear navigation");
   if (game.micro >= 90 && game.macro <= 45) warnings.push("repetition");
   if (game.macro >= 90 && game.micro <= 10) warnings.push("less action");
-  if (!warnings.length) return "Only risk: taste mismatch.";
+  if (!warnings.length) return "No obvious mismatch from the current profile.";
   return `Watch for ${warnings.slice(0, 2).join(" and ")}.`;
+}
+
+function profileHighlights(profile) {
+  return [
+    ["Micro", profile.micro],
+    ["Meso", profile.meso],
+    ["Macro", profile.macro],
+    ["Immersion", profile.immersion],
+    ["Low friction", 100 - profile.friction],
+    ["Low pressure", 100 - profile.stress],
+  ]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 4);
 }
 
 function steamPosterUrls(id) {
@@ -846,8 +860,8 @@ function renderProgress() {
 }
 
 function weightLabel(value) {
-  const labels = ["Off", "Light", "Good", "Strong"];
-  return labels[Number(value) || 0] || "Off";
+  const labels = ["Not important", "Low", "Medium", "High"];
+  return labels[Number(value) || 0] || "Not important";
 }
 
 function setChoiceWeight(questionId, choiceIndex, value) {
@@ -878,6 +892,8 @@ function renderQuiz() {
   if (!question) {
     const matches = topMatches(9);
     const best = matches[0];
+    const profile = quizProfile();
+    const profileChips = profileHighlights(profile);
     const importedCount = libraryTitleCount();
     const hiddenCount = importedCount && state.hideOwned
       ? games.filter((game) => isInLibrary(game)).length
@@ -889,7 +905,13 @@ function renderQuiz() {
     mount.innerHTML = `
       <div class="result-view">
         <div class="results-heading">
-          <h2>Your matches</h2>
+          <div>
+            <p class="eyebrow">Recommendation profile</p>
+            <h2>Your matches</h2>
+            <div class="profile-chip-row" aria-label="Strongest profile signals">
+              ${profileChips.map(([label, value]) => `<span>${escapeHtml(label)} ${Math.round(value)}</span>`).join("")}
+            </div>
+          </div>
           <p>${escapeHtml(libraryLine)}</p>
         </div>
         <div class="result-scroll">
@@ -898,7 +920,10 @@ function renderQuiz() {
             <div class="best-copy">
               <p class="best-label">Best match · ${best.match}%</p>
               <h3>${escapeHtml(best.title)}</h3>
-              <p class="result-reason">${escapeHtml(describeLike(best))} ${escapeHtml(describeBounce(best))}</p>
+              <div class="reason-stack">
+                <p><strong>Why it fits</strong><span>${escapeHtml(describeLike(best))}</span></p>
+                <p><strong>Why it may miss</strong><span>${escapeHtml(describeBounce(best))}</span></p>
+              </div>
             </div>
           </article>
           <div class="result-grid">
@@ -909,7 +934,10 @@ function renderQuiz() {
                   <h4>${escapeHtml(game.title)}</h4>
                   <strong class="match-score">${game.match}% match</strong>
                   ${game.owned ? `<span class="owned-pill">In library</span>` : ""}
-                  <p class="game-meta">${escapeHtml(describeLike(game))}</p>
+                  <div class="reason-stack compact">
+                    <p><strong>Fits</strong><span>${escapeHtml(describeLike(game))}</span></p>
+                    <p><strong>Risk</strong><span>${escapeHtml(describeBounce(game))}</span></p>
+                  </div>
                   <div class="score-mini">${renderBars(game)}</div>
                 </div>
               </article>
@@ -942,6 +970,7 @@ function renderQuiz() {
           const value = Number(weights[index] || 0);
           return `
             <article class="choice-card ${value > 0 ? "is-selected" : ""}" data-choice-card="${index}">
+              ${choice.group ? `<span class="choice-group">${escapeHtml(choice.group)}</span>` : ""}
               <button class="choice-toggle" type="button" data-toggle-choice="${index}">${escapeHtml(choice.label)}</button>
               <div class="weight-control">
                 <input type="range" min="0" max="3" step="1" value="${value}" data-choice-weight="${index}" aria-label="Weight for ${escapeHtml(choice.label)}" />

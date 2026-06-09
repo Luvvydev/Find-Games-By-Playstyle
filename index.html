@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SkillMap Games</title>
-    <meta name="description" content="Take a short quiz and find games by what they test: execution, reads, systems, atmosphere, friction, and playstyle." />
+    <title>SkillMap | Find games by how you like to win</title>
+    <meta name="description" content="Take a short quiz and get game recommendations by skill profile, pressure, immersion, friction, and playstyle." />
     <link rel="stylesheet" href="./styles.css?v=steam-backend-v2" />
   </head>
   <body>
@@ -14,12 +14,12 @@
           <img class="brand-logo" src="./assets/skillmap-logo.svg" alt="SkillMap" />
           <div>
             <p class="brand-name">SkillMap</p>
-            <p class="brand-subtitle">games by playstyle</p>
+            <p class="brand-subtitle">how you like to win</p>
           </div>
         </div>
 
         <nav class="top-actions" aria-label="Extra tools">
-          <button class="ghost-button" type="button" data-panel="methodPanel">Cheat test</button>
+          <button class="ghost-button" type="button" data-panel="methodPanel">Skill model</button>
           <button class="ghost-button" type="button" data-panel="libraryPanel" id="steamTopButton">Connect Steam</button>
           <button class="ghost-button" type="button" data-panel="databasePanel">Browse games</button>
         </nav>
@@ -29,24 +29,35 @@
         <section class="media-column" aria-label="Reference and video">
           <button class="reference-card" id="openReference" type="button" aria-label="Open micro meso macro reference image">
             <img src="./assets/micro-meso-macro-reference.jpeg" alt="Micro meso macro game map reference" />
-            <span>Zoom</span>
+            <span class="reference-zoom">Zoom</span>
+            <span class="reference-caption">
+              <strong>Map preview</strong>
+              <small>Click to zoom, drag, and inspect the reference.</small>
+            </span>
           </button>
 
-          <section class="video-card" aria-label="Video framework">
-            <iframe src="https://www.youtube.com/embed/NgHvdCcmQ4o?si=RC_5yBeuS5C6mfSc" title="Once you see this, You’ll see Competitive Games Differently" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </section>
-
           <div class="axis-strip" aria-label="Skill axes">
-            <div><strong>Micro</strong><span>execution</span></div>
-            <div><strong>Meso</strong><span>reads</span></div>
-            <div><strong>Macro</strong><span>systems</span></div>
+            <div><strong>Micro</strong><span>mechanical execution</span></div>
+            <div><strong>Meso</strong><span>reads and adaptation</span></div>
+            <div><strong>Macro</strong><span>planning and systems</span></div>
           </div>
+
+          <a class="source-card" href="https://www.youtube.com/watch?v=NgHvdCcmQ4o" target="_blank" rel="noreferrer" aria-label="Open the source video on YouTube">
+            <span class="source-pill">Source video</span>
+            <strong>Once you see this, you'll see competitive games differently</strong>
+          </a>
         </section>
 
         <section class="quiz-card" aria-label="Playstyle quiz">
-          <div class="quiz-progress" aria-label="Quiz progress">
-            <span id="progressText">1 / 12</span>
-            <div class="progress-track"><span id="progressBar"></span></div>
+          <div class="quiz-topline">
+            <div class="quiz-intro">
+              <p class="eyebrow">Find games by how you like to win</p>
+              <p>Answer a short quiz. Results explain why each game fits, why it may miss, and can hide games you already own with optional Steam connect.</p>
+            </div>
+            <div class="quiz-progress" aria-label="Quiz progress">
+              <span id="progressText">1 / 12</span>
+              <div class="progress-track"><span id="progressBar"></span></div>
+            </div>
           </div>
           <div class="quiz-body" id="quizMount" aria-live="polite"></div>
         </section>
